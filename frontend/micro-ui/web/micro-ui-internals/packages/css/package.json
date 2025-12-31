@@ -11,8 +11,21 @@
     "prefix": ""
   },
   "scripts": {
-    "start": "gulp build",
-    "build:prod": "NODE_ENV=production gulp build",
+    "start": "cross-env SKIP_PREFLIGHT_CHECK=true yarn build && yarn dev",
+    "dev": "run-p dev:*",
+    "sprint": "SKIP_PREFLIGHT_CHECK=true run-s start:script",
+    "start:dev": "run-p dev:**",
+    "start:script": "./scripts/create.sh",
+    "dev:css": "cd packages/css && yarn start",
+    "publish:css": "cd packages/css && yarn && npm publish --tag workbench-1.0",
+    "dev:example": "cd example && yarn start",
+    "dev:pgr": "cd packages/modules/pgr && yarn start",
+    "build": "run-s build:**",
+    "build:pgr": "cd packages/modules/pgr && yarn build",
+    "deploy:jenkins": "./scripts/jenkins.sh",
+    "clean": "rm -rf node_modules",
+    "build:css": "cd packages/css && cross-env NODE_ENV=production gulp build",
+    "build:prod": "yarn build:css",
     "prepublish": "yarn build:prod",
     "deploy": "gulp && cp -R svg example && cp -R img example && gh-pages -d example"
   },

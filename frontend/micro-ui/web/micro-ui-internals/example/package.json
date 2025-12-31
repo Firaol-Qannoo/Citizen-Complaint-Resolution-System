@@ -6,7 +6,8 @@
   "private": true,
   "homepage": "digit-ui",
   "scripts": {
-    "start": "react-scripts start"
+    "start": "cross-env SKIP_PREFLIGHT_CHECK=true run-s build start:dev",
+    "build:prod": "cross-env NODE_ENV=production gulp build"
   },
   "devDependencies": {
     "@egovernments/digit-ui-libraries": "1.9.3",
